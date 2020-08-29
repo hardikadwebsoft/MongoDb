@@ -34,8 +34,8 @@ namespace Mongodb.Web.Controllers
         public IActionResult Insert(Book book)
         {
             _service.Create(book);
-            ViewBag.Message = "Book added successfully!";
-            return View();
+            TempData["Message"] = "Book added successfully!";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Update(string id)
@@ -59,13 +59,13 @@ namespace Mongodb.Web.Controllers
             try
             {
                 _service.Update(id, bookIn);
-                ViewBag.Message = "Book updated successfully!";
+                TempData["Message"] = "Book updated successfully!";
             }
             catch
             {
-                ViewBag.Message = "Error while updating Book!";
-            }          
-            return View(bookIn);
+                TempData["Message"] = "Error occured while updating Book!";
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult ConfirmDelete(string id)
@@ -89,7 +89,7 @@ namespace Mongodb.Web.Controllers
             }
             catch
             {
-                TempData["Message"] = "Error while deleting Book!";
+                TempData["Message"] = "Error occuered while deleting Book!";
             }                    
             return RedirectToAction("Index");
         }

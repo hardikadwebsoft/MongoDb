@@ -5,35 +5,32 @@
 }
 <h1>Insert Book</h1>
 
-<h2>@ViewBag.Message</h2>
-
-<form asp-controller="Home" asp-action="Insert" method="post">
-    <table class="table-striped" border="1" cellpadding="10">
-        <tr>
-            <td>Book ID :</td>
-            <td><input asp-for="Id" /></td>
-        </tr>
-        <tr>
-            <td>Book Name :</td>
-            <td><input asp-for="BookName" /></td>
-        </tr>       
-        <tr>
-            <td>Author :</td>
-            <td><input asp-for="Author" /></td>
-        </tr>
-        <tr>
-            <td>Category :</td>
-            <td><input asp-for="Category" /></td>
-        </tr>
-        <tr>
-            <td>Price :</td>
-            <td><input asp-for="Price" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button class="btn btn-secondary" type="submit">Save</button>
-            </td>
-        </tr>
-    </table>
-</form>
-
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="Home" asp-action="Insert" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Book ID</label>
+                <input type="text" asp-for="Id" class="form-control" placeholder="Enter book id">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Book Name</label>
+                <input type="text" asp-for="BookName" class="form-control" placeholder="Enter book name">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Author</label>
+                <input type="text" asp-for="Author" class="form-control" placeholder="Enter book author">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Category</label>
+                <input type="text" asp-for="Category" class="form-control" placeholder="Enter book category">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Price</label>
+                <input type="number" asp-for="Price" class="form-control" placeholder="Enter book price">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" placeholder="Enter book id">Save Book</button>
+            </div>
+        </form>
+    </div>
+</div>

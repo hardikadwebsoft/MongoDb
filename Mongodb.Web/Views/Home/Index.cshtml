@@ -3,62 +3,65 @@
     ViewData["Title"] = "Home Page";
 }
 
+<h1>List of Books</h1>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6">
-            <h1>List of Books</h1>
+@{
+    string message = string.Empty;
+    if (TempData["Message"] != null)
+    {
+        message = TempData["Message"].ToString();
+        <div class="success-err-div">
+            @if (message.ToUpper().Contains("SUCCESS"))
+            {
+                <span class="success-msg">@message</span>
+            }
+            else if (message.ToUpper().Contains("ERROR"))
+            {
+                <span class="error-msg">@message</span>
+            }
         </div>
-        <div class="col-md-6">
-            <button type="button" class="btn btn-light">
-                <a asp-controller="Home" asp-action="Insert">
-                    Add New Book
-                </a>
-            </button>
-        </div>
-    </div>
-    
-</div>
+    }
+}
 
-<h2>@TempData["Message"]</h2>
+<a asp-controller="Home" asp-action="Insert" class="btn btn-primary">Add New Book</a>
+<br />
+<br />
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-striped">
-            <thead>
-                <tr scope="col">
-                    <th>Id</th>
-                    <th>BookName</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.BookName</td>
-                        <td>@item.Author</td>
-                        <td>@item.Category</td>
-                        <td>@item.Price</td>
-                        <td>
-                            <a asp-controller="Home" asp-action="Update"
-                               asp-route-id="@item.Id">Edit</a>
-                        </td>
-                        <td>
-                            <a asp-controller="Home" asp-action="ConfirmDelete"
-                               asp-route-id="@item.Id">Delete</a>
-                        </td>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>BookName</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.BookName</td>
+                <td>@item.Author</td>
+                <td>@item.Category</td>
+                <td>@item.Price</td>
+                <td>
+                    <a asp-controller="Home" asp-action="Update" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
+                    <a asp-controller="Home" asp-action="ConfirmDelete" asp-route-id="@item.Id" class="btn btn-danger"> Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
- 
-</div>
-   
+@section Scripts{
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $(".success-err-div").fadeOut("slow");
+            }, 1000);
+        })
+    </script>
+}
