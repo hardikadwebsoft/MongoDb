@@ -1,0 +1,38 @@
+﻿@model Mongodb.Web.Models.Book
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Do you want to delete this Book?</h2>
+
+<form asp-controller="Home" asp-action="Delete" method="post">
+    <input type="hidden" name="Id" value="@Model.Id.ToString()" />
+    <table border="1" cellpadding="10">
+        <tr>
+            <td>Book ID :</td>
+            <td><input asp-for="Id" /></td>
+        </tr>
+        <tr>
+            <td>Book Name :</td>
+            <td><input asp-for="BookName" /></td>
+        </tr>      
+        <tr>
+            <td>Author :</td>
+            <td><input asp-for="Author" /></td>
+        </tr>
+        <tr>
+            <td>Category :</td>
+            <td><input asp-for="Category" /></td>
+        </tr>
+        <tr>
+            <td>Price :</td>
+            <td><input asp-for="Price" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Delete</button>
+            </td>
+        </tr>
+    </table>
+</form>
