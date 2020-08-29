@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Binary Strting";
+    ViewBag.Title = "Binary String";
 }
 
 <div class="container">
@@ -23,10 +23,6 @@
         $(document).ready(function () {
             $("#btnSubmit").click(function () {
                 var val = $("#txtInputStr").val();
-                //$.post("/binary/CheckValidBinaryString", { binaryStr: val }, function (data) {
-                //    alert(data);
-                //});
-
                 $.ajax({
                     url: "/binary/CheckValidBinaryString",
                     data: JSON.stringify(val),
