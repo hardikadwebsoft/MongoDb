@@ -93,5 +93,13 @@ namespace Mongodb.Web.Controllers
             }                    
             return RedirectToAction("Index");
         }
+
+        public IActionResult Aggregate()
+        {
+            IEnumerable<Book> emp = new List<Book>();
+            emp = _service.Aggregate();
+            ViewBag.Message = "Perform Aggregate!";
+            return View(emp);          
+        }
     }
 }

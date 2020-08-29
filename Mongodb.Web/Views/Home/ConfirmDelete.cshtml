@@ -8,7 +8,7 @@
 
 <form asp-controller="Home" asp-action="Delete" method="post">
     <input type="hidden" name="Id" value="@Model.Id.ToString()" />
-    <table border="1" cellpadding="10">
+    <table class="table-striped"  border="1" cellpadding="10">
         <tr>
             <td>Book ID :</td>
             <td><input asp-for="Id" /></td>
@@ -31,7 +31,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <button type="submit">Delete</button>
+                <button class="btn btn-secondary" type="submit">Delete</button>
             </td>
         </tr>
     </table>
