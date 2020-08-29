@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@section Styles{
+    <link href="~/css/custom/home/index.css" rel="stylesheet" />
+}
 
 <h1>List of Books</h1>
 
@@ -49,7 +52,7 @@
                 <td>@item.Price</td>
                 <td>
                     <a asp-controller="Home" asp-action="Update" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
-                    <a asp-controller="Home" asp-action="ConfirmDelete" asp-route-id="@item.Id" class="btn btn-danger"> Delete</a>
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"> Delete</a>
                 </td>
             </tr>
         }
@@ -57,11 +60,5 @@
 </table>
 
 @section Scripts{
-    <script>
-        $(function () {
-            setTimeout(function () {
-                $(".success-err-div").fadeOut("slow");
-            }, 1000);
-        })
-    </script>
+    <script src="~/js/custom/home/index.js"></script>
 }

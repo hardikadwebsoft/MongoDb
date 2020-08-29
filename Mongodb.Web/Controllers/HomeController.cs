@@ -68,12 +68,6 @@ namespace Mongodb.Web.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        //public IActionResult ConfirmDelete(string id)
-        //{
-        //    Book emp = _service.ConfirmDelete(id);
-        //    return View(emp);
-        //}
         
         public IActionResult Delete(string id)
         {

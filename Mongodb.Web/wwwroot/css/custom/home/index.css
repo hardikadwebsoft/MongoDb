@@ -1,0 +1,15 @@
+﻿.success-msg {
+    color: green;
+}
+
+.error-msg {
+    color: red;
+}
+
+.success-msg, .error-msg {
+    font-size: 20px;
+}
+
+.success-err-div {
+    margin-bottom: 10px;
+}
