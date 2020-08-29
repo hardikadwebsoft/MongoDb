@@ -15,9 +15,9 @@ namespace Mongodb.Web.Helpers
         Book Get(string id);
         Book Create(Book book);
         void Update(string id, Book bookIn);
-        void Remove(Book bookIn);
+        //void Remove(Book bookIn);
         void Remove(string id);
-        Book ConfirmDelete(string id);
+        //Book ConfirmDelete(string id);
         IEnumerable<Book> Aggregate();
     }
 
@@ -74,94 +74,33 @@ namespace Mongodb.Web.Helpers
 
             return _books.Find(book => true).ToList();
         }
-            
 
         public Book Get(string id) =>
             _books.Find<Book>(book => book.Id == id).FirstOrDefault();
 
         public Book Create(Book book)
         {
-            using (var session = _client.StartSession())
-            {
-                // Begin transaction
-                session.StartTransaction();
-
-                try
-                {
-                    _books.InsertOne(book);
-                    session.CommitTransaction();
-                }
-                catch(Exception ex)
-                {
-                    session.AbortTransaction();
-                }
-                
-                return book;
-            }
+            _books.InsertOne(book);
+            return book;
         }
 
         public void Update(string id, Book bookIn) 
         {
-            using (var session = _client.StartSession())
-            {
-                session.StartTransaction();
-
-                try
-                {
-                    _books.ReplaceOne(book => book.Id == id, bookIn);
-                    session.CommitTransaction();
-                }
-                catch (Exception ex)
-                {
-                    session.AbortTransaction();
-                }
-            }
-
-            //_books.ReplaceOne(book => book.Id == id, bookIn);
+            _books.ReplaceOne(book => book.Id == id, bookIn);
         }
 
+        //public void Remove(Book bookIn) 
+        //{
+        //    _books.DeleteOne(book => book.Id == bookIn.Id);
+        //}
 
-        public void Remove(Book bookIn) 
-        {
-            using (var session = _client.StartSession())
-            {
-                session.StartTransaction();
-
-                try
-                {
-                    _books.DeleteOne(book => book.Id == bookIn.Id);
-                    session.CommitTransaction();
-                }
-                catch (Exception ex)
-                {
-                    session.AbortTransaction();
-                }
-            }
-            //_books.DeleteOne(book => book.Id == bookIn.Id);
-        }
-
-        public Book ConfirmDelete(string id) =>
-         _books.Find<Book>(book => book.Id == id).FirstOrDefault();
+        //public Book ConfirmDelete(string id) =>
+        // _books.Find<Book>(book => book.Id == id).FirstOrDefault();
 
         public void Remove(string id) 
         {
-            using (var session = _client.StartSession())
-            {
-                session.StartTransaction();
-
-                try
-                {
-                    _books.DeleteOne(book => book.Id == id);
-                    session.CommitTransaction();
-                }
-                catch (Exception ex)
-                {
-                    session.AbortTransaction();
-                }
-            }
-            //_books.DeleteOne(book => book.Id == id);
+            _books.DeleteOne(book => book.Id == id);
         }
-            
 
         public IEnumerable<Book> Aggregate()
         {

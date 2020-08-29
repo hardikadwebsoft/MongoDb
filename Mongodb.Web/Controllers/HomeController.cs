@@ -25,6 +25,7 @@ namespace Mongodb.Web.Controllers
             var books = _service.Get();
             return View(books);
         }
+
         public IActionResult Insert()
         {
             return View();
@@ -68,13 +69,12 @@ namespace Mongodb.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult ConfirmDelete(string id)
-        {
-            Book emp = _service.ConfirmDelete(id);
-            return View(emp);
-        }
-
-        [HttpPost]
+        //public IActionResult ConfirmDelete(string id)
+        //{
+        //    Book emp = _service.ConfirmDelete(id);
+        //    return View(emp);
+        //}
+        
         public IActionResult Delete(string id)
         {
             var book = _service.Get(id);
