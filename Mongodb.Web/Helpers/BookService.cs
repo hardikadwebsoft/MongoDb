@@ -1,4 +1,6 @@
 ﻿using Mongodb.Web.Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace Mongodb.Web.Helpers
         void Remove(Book bookIn);
         void Remove(string id);
         Book ConfirmDelete(string id);
+        IEnumerable<Book> Aggregate();
     }
 
     public class BookService : IBookService
@@ -52,5 +55,18 @@ namespace Mongodb.Web.Helpers
 
         public void Remove(string id) =>
             _books.DeleteOne(book => book.Id == id);
+
+        public IEnumerable<Book> Aggregate()
+        {
+          
+            var result = _books.Aggregate()
+               .Match(x => x.Category == "book")                                                   
+               .Group(BsonDocument.Parse("{ '_id':'$Name'}"))
+               .Sort(new BsonDocument {{ "Price", -1 } }).ToList();
+
+            IEnumerable<Book> usersOfInterestList = BsonSerializer.Deserialize<List<Book>>(result.ToJson());
+            
+            return usersOfInterestList;          
+        }     
     }
 }

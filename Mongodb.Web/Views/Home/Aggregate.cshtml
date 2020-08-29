@@ -1,0 +1,39 @@
+﻿@model List<Mongodb.Web.Models.Book>
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+<table class="table table-striped">
+    <thead>
+        <tr scope="col">
+            <th>Id</th>
+            <th>BookName</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.BookName</td>
+                <td>@item.Author</td>
+                <td>@item.Category</td>
+                <td>@item.Price</td>
+                <td>
+                    <a asp-controller="Home" asp-action="Update"
+                       asp-route-id="@item.Id">Edit</a>
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="ConfirmDelete"
+                       asp-route-id="@item.Id">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
