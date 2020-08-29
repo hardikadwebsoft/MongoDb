@@ -90,10 +90,9 @@ namespace Mongodb.Web.Controllers
 
         public IActionResult Aggregate()
         {
-            IEnumerable<Book> emp = new List<Book>();
-            emp = _service.Aggregate();
+            var result = _service.Aggregate();
             ViewBag.Message = "Perform Aggregate!";
-            return View(emp);          
+            return View(result);          
         }
     }
 }

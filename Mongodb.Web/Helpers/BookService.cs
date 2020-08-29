@@ -103,16 +103,15 @@ namespace Mongodb.Web.Helpers
         }
 
         public IEnumerable<Book> Aggregate()
-        {
-          
+        { 
             var result = _books.Aggregate()
                .Match(x => x.Category == "book")                                                   
-               .Group(BsonDocument.Parse("{ '_id':'$Name'}"))
+               .Group(BsonDocument.Parse("{ '_id':'$Id'}"))
                .Sort(new BsonDocument {{ "Price", -1 } }).ToList();
 
-            IEnumerable<Book> usersOfInterestList = BsonSerializer.Deserialize<List<Book>>(result.ToJson());
+            IEnumerable<Book> bookResult = BsonSerializer.Deserialize<List<Book>>(result.ToJson());
             
-            return usersOfInterestList;          
+            return bookResult;
         }     
     }
 }
