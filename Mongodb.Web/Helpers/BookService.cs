@@ -94,12 +94,11 @@ namespace Mongodb.Web.Helpers
 
         public IEnumerable<Aggregate> Aggregate()
         {
-            var result = _books.Aggregate()
-              .Match(x => x.Category == "book")
+            var result = _books.Aggregate()            
               .Group(key => key.BookName,
                value => new {
                    BookName = value.Key,
-                   Total = value.Select(x => x.Price).Max()
+                   Total = value.Select(x => x.Price).Max()               
                })
               .Sort(new BsonDocument { { "Price", -1 } }).ToList();
 
