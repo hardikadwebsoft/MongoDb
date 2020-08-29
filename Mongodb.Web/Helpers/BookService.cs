@@ -26,12 +26,11 @@ namespace Mongodb.Web.Helpers
         private readonly IMongoCollection<Book> _books;
         private readonly MongoClient _client;
 
-        public BookService(IBookstoreDatabaseSettings settings, MongoClient client)
+        public BookService(IBookstoreDatabaseSettings settings)
         {
             _client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            var database = _client.GetDatabase(settings.DatabaseName);
             _books = database.GetCollection<Book>(settings.BooksCollectionName);
-            _client = client;
         }
 
         public List<Book> Get()
