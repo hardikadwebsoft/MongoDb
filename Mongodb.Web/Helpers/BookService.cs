@@ -15,6 +15,7 @@ namespace Mongodb.Web.Helpers
         void Update(string id, Book bookIn);
         void Remove(Book bookIn);
         void Remove(string id);
+        Book ConfirmDelete(string id);
     }
 
     public class BookService : IBookService
@@ -45,6 +46,9 @@ namespace Mongodb.Web.Helpers
 
         public void Remove(Book bookIn) =>
             _books.DeleteOne(book => book.Id == bookIn.Id);
+
+        public Book ConfirmDelete(string id) =>
+         _books.Find<Book>(book => book.Id == id).FirstOrDefault();
 
         public void Remove(string id) =>
             _books.DeleteOne(book => book.Id == id);

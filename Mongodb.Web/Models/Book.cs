@@ -9,8 +9,7 @@ namespace Mongodb.Web.Models
 {
     public class Book
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId]       
         public string Id { get; set; }
 
         [BsonElement("Name")]

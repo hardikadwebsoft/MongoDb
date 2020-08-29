@@ -5,33 +5,93 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Mongodb.Web.Helpers;
 using Mongodb.Web.Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Mongodb.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private IBookService _service;
+        public HomeController(IBookService service)
         {
-            _logger = logger;
+            _service = service;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var books = _service.Get();
+            return View(books);
         }
-
-        public IActionResult Privacy()
+        public IActionResult Insert()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult Insert(Book book)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            _service.Create(book);
+            ViewBag.Message = "Book added successfully!";
+            return View();
+        }
+
+        public IActionResult Update(string id)
+        {          
+            Book book = _service.Get(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return View(book);
+        }
+
+        [HttpPost]
+        public IActionResult Update(string id, Book bookIn)
+        {
+            var book = _service.Get(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _service.Update(id, bookIn);
+                ViewBag.Message = "Book updated successfully!";
+            }
+            catch
+            {
+                ViewBag.Message = "Error while updating Book!";
+            }          
+            return View(bookIn);
+        }
+
+        public IActionResult ConfirmDelete(string id)
+        {
+            Book emp = _service.ConfirmDelete(id);
+            return View(emp);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            var book = _service.Get(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _service.Remove(book.Id);
+                TempData["Message"] = "Book deleted successfully!";
+            }
+            catch
+            {
+                TempData["Message"] = "Error while deleting Book!";
+            }                    
+            return RedirectToAction("Index");
         }
     }
 }
