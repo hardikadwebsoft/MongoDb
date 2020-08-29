@@ -140,13 +140,29 @@ namespace Mongodb.Web.Helpers
             }
             //_books.DeleteOne(book => book.Id == bookIn.Id);
         }
-            
 
         public Book ConfirmDelete(string id) =>
          _books.Find<Book>(book => book.Id == id).FirstOrDefault();
 
-        public void Remove(string id) =>
-            _books.DeleteOne(book => book.Id == id);
+        public void Remove(string id) 
+        {
+            using (var session = _client.StartSession())
+            {
+                session.StartTransaction();
+
+                try
+                {
+                    _books.DeleteOne(book => book.Id == id);
+                    session.CommitTransaction();
+                }
+                catch (Exception ex)
+                {
+                    session.AbortTransaction();
+                }
+            }
+            //_books.DeleteOne(book => book.Id == id);
+        }
+            
 
         public IEnumerable<Book> Aggregate()
         {
