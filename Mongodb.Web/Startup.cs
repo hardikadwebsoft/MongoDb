@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Mongodb.Web.Controllers;
+using Mongodb.Web.Helpers;
 using Mongodb.Web.Models;
 
 namespace Mongodb.Web
@@ -33,7 +33,7 @@ namespace Mongodb.Web
             services.AddSingleton<IBookstoreDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<BookstoreDatabaseSettings>>().Value);
 
-            services.AddSingleton<BookService>();
+            services.AddSingleton<IBookService, BookService>();
             services.AddControllersWithViews();
         }
 
