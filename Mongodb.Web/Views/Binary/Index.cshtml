@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Binary String";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <p>Check for a valid Binary String</p>
+            <br />
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label>Binary String</label>
+                    <input type="text" class="form-control" id="txtInputStr" placeholder="Binary String" required />
+                </div>
+                <button type="button" class="btn btn-primary" id="btnSubmit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+                var val = $("#txtInputStr").val();
+                $.ajax({
+                    url: "/binary/CheckValidBinaryString",
+                    data: JSON.stringify(val),
+                    contentType: "application/json",
+                    dataType: "json",
+                    type: "POST",
+                    async: false,
+                    success: function (result) {
+                        alert(result);
+                    },
+                    error: function () {
+                        alert("Error occured while proceesing your request. Pls try again.");
+                    }
+                });
+            });
+        });
+    </script>
+}
