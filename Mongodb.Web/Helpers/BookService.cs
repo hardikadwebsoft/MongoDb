@@ -16,7 +16,7 @@ namespace Mongodb.Web.Helpers
         Book Create(Book book);
         void Update(string id, Book bookIn);
         void Remove(string id);
-        IEnumerable<Book> Aggregate();
+        IEnumerable<Aggregate> Aggregate();
     }
 
     public class BookService : IBookService
@@ -92,16 +92,20 @@ namespace Mongodb.Web.Helpers
             _books.DeleteOne(book => book.Id == id);
         }
 
-        public IEnumerable<Book> Aggregate()
-        { 
+        public IEnumerable<Aggregate> Aggregate()
+        {
             var result = _books.Aggregate()
-               .Match(x => x.Category == "book")                                                   
-               .Group(BsonDocument.Parse("{ '_id':'$Id'}"))
-               .Sort(new BsonDocument {{ "Price", -1 } }).ToList();
+              .Match(x => x.Category == "book")
+              .Group(key => key.BookName,
+               value => new {
+                   BookName = value.Key,
+                   Total = value.Select(x => x.Price).Max()
+               })
+              .Sort(new BsonDocument { { "Price", -1 } }).ToList();
 
-            IEnumerable<Book> bookResult = BsonSerializer.Deserialize<List<Book>>(result.ToJson());
-            
+            IEnumerable<Aggregate> bookResult = BsonSerializer.Deserialize<List<Aggregate>>(result.ToJson());
+
             return bookResult;
-        }     
+        }
     }
 }

@@ -1,39 +1,31 @@
-﻿@model List<Mongodb.Web.Models.Book>
+﻿@model List<Mongodb.Web.Models.Aggregate>
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Aggregate";
 }
 <h1>@ViewData["Title"]</h1>
+
+@section Styles{
+    <link href="~/css/custom/home/index.css" rel="stylesheet" />
+}
+
 <table class="table table-striped">
     <thead>
-        <tr scope="col">
-            <th>Id</th>
+        <tr scope="col">         
             <th>BookName</th>
-            <th>Author</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Total</th>          
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Id</td>
                 <td>@item.BookName</td>
-                <td>@item.Author</td>
-                <td>@item.Category</td>
-                <td>@item.Price</td>
-                <td>
-                    <a asp-controller="Home" asp-action="Update"
-                       asp-route-id="@item.Id">Edit</a>
-                </td>
-                <td>
-                    <a asp-controller="Home" asp-action="ConfirmDelete"
-                       asp-route-id="@item.Id">Delete</a>
-                </td>
-
+                <td>@item.Total</td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts{
+    <script src="~/js/custom/home/index.js"></script>
+}
